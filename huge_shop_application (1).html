@@ -1,0 +1,1555 @@
+<!-- ... existing code ... -->
+    <title>HUGE SHOP — منصة المهام والأرباح اليومية</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome & Phosphor Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Config Tailwind Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0B0E14',
+                            card: '#151923',
+                            border: '#232938',
+                            cyan: '#00f2fe',
+                            pink: '#4facfe',
+                            accent: '#00E5FF',
+                            purple: '#7928CA',
+                            magenta: '#FF0080',
+                            gold: '#FFD700',
+                            bronze: '#CD7F32',
+                            silver: '#C0C0C0',
+                        }
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 15px rgba(0, 242, 254, 0.4)',
+                        'neon-pink': '0 0 15px rgba(255, 0, 128, 0.4)',
+                        'neon-gold': '0 0 15px rgba(255, 215, 0, 0.4)',
+                        'neon-green': '0 0 15px rgba(16, 185, 129, 0.4)',
+                        'card-glow': '0 10px 30px -10px rgba(0, 229, 255, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #07090e;
+            color: #f3f4f6;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-panel {
+            background: rgba(21, 25, 35, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(25, 31, 45, 0.9) 0%, rgba(15, 19, 28, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-pink-text {
+            background: linear-gradient(135deg, #FF0080 0%, #7928CA 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-btn:active {
+            transform: scale(0.97);
+            opacity: 0.9;
+        }
+
+        .gradient-pink-btn {
+            background: linear-gradient(135deg, #FF0080 0%, #7928CA 100%);
+        }
+
+        .gradient-green-btn {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+
+        /* Animations */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.03); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes rotateGears {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .rotate-gear {
+            animation: rotateGears 4s linear infinite;
+        }
+
+        .rotate-gear-reverse {
+            animation: rotateGears 3s linear infinite reverse;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0e14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2fe;
+        }
+
+        /* Bottom Nav Safe Padding for Mobile */
+        .pb-safe {
+            padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+        }
+    </style>
+</head>
+<body class="bg-[#07090e] min-h-screen text-gray-100 flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+    <!-- Container Wrap -->
+    <div id="app-container" class="w-full max-w-md mx-auto min-h-screen bg-[#0b0e14] relative flex flex-col shadow-2xl border-x border-gray-800/40 pb-safe">
+
+        <!-- GLOBAL HEADER / BRAND -->
+        <header id="global-header" class="hidden glass-panel sticky top-0 z-40 px-4 py-3 flex items-center justify-between border-b border-gray-800/60">
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-xl gradient-pink-btn flex items-center justify-center shadow-neon-pink">
+                    <i class="fa-solid fa-bag-shopping text-white text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wider gradient-text leading-tight">HUGE SHOP</h1>
+                    <p class="text-[10px] text-gray-400 font-medium">المهام والأرباح اليومية</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="openWhatsAppSupport()" class="px-2.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center gap-1 hover:bg-emerald-500/20 transition-all">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>الدعم</span>
+                </button>
+                
+                <button id="dev-panel-btn" onclick="switchView('dev-panel')" class="hidden px-2.5 py-1.5 rounded-lg bg-purple-500/20 border border-purple-500/40 text-purple-300 text-xs font-bold flex items-center gap-1">
+                    <i class="fa-solid fa-user-shield text-xs"></i>
+                    <span>الإدارة</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT CONTAINER AREA -->
+        <main id="main-content" class="flex-1 p-4 overflow-y-auto">
+
+            <!-- ================= VIEW 1: LOGIN ================= -->
+            <section id="view-login" class="flex flex-col justify-center items-center min-h-[85vh] space-y-6">
+                <!-- Huge Shop Logo Card -->
+                <div class="text-center space-y-3">
+                    <div class="w-24 h-24 mx-auto rounded-3xl gradient-pink-btn flex items-center justify-center shadow-neon-pink p-1 relative">
+                        <div class="w-full h-full bg-[#0b0e14] rounded-[22px] flex items-center justify-center">
+                            <i class="fa-solid fa-bag-shopping text-4xl text-cyan-400"></i>
+                        </div>
+                        <span class="absolute -bottom-2 bg-cyan-500 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full shadow-md">المنصة المعتمدة</span>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-extrabold gradient-text">HUGE SHOP</h2>
+                        <p class="text-xs text-gray-400 mt-1">تسجيل دخول آمن بواسطة رقم الهاتف</p>
+                    </div>
+                </div>
+
+                <!-- Login Form Box -->
+                <div class="w-full glass-card p-6 rounded-2xl border border-gray-800 space-y-4 shadow-xl">
+                    <div class="bg-cyan-950/30 border border-cyan-800/40 rounded-xl p-3 text-center">
+                        <span class="text-xs text-cyan-300 font-semibold block">نظام الرصيد والمهام اليومية</span>
+                        <span class="text-[11px] text-gray-400 block mt-0.5">سجّل دخولك للوصول إلى أرباح حسابك</span>
+                    </div>
+
+                    <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                        <!-- Phone Input -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">رقم الهاتف</label>
+                            <div class="relative flex items-center">
+                                <span class="absolute right-3 text-cyan-400 font-bold text-sm select-none" dir="ltr">+20</span>
+                                <input type="tel" id="login-phone" required placeholder="010XXXXXXXX" dir="ltr"
+                                    class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 pr-14 pl-3 text-left text-sm font-semibold text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all" />
+                            </div>
+                        </div>
+
+                        <!-- Password Input -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">كلمة المرور الرقمية (6 أرقام)</label>
+                            <div class="relative flex items-center">
+                                <input type="password" id="login-password" maxlength="6" required placeholder="******" dir="ltr"
+                                    class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-center tracking-[0.3em] text-lg font-bold text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all" />
+                                <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute left-3 text-gray-400 hover:text-cyan-400">
+                                    <i class="fa-solid fa-eye text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Banner -->
+                        <div id="login-error-msg" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs p-2.5 rounded-xl text-center"></div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="login-submit-btn" class="w-full gradient-btn text-black font-extrabold py-3.5 rounded-xl shadow-neon-cyan flex items-center justify-center gap-2 mt-2">
+                            <span>تسجيل الدخول</span>
+                            <i class="fa-solid fa-arrow-left text-sm"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- System Notice -->
+                <div class="text-center space-y-2">
+                    <p class="text-[11px] text-gray-500">حسابك لا يملكه تسجيل ذاتي. يتم إنشاء الحسابات عن طريق إدارة المنصة فقط.</p>
+                    <div class="inline-block px-3 py-1 bg-gray-900/80 rounded-lg border border-gray-800 text-[10px] text-gray-400">
+                        حقوق النشر © 2026 HUGE SHOP — جميع الحقوق محفوظة
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 2: HOME (MAIN DASHBOARD) ================= -->
+            <section id="view-home" class="hidden space-y-5">
+                <!-- User Welcome Banner -->
+                <div class="glass-card p-4 rounded-2xl relative overflow-hidden border border-cyan-500/20 shadow-card-glow">
+                    <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl"></div>
+                    <div class="flex items-center justify-between relative z-10">
+                        <div>
+                            <span class="text-[11px] font-semibold text-cyan-400 bg-cyan-950/60 border border-cyan-800/50 px-2 py-0.5 rounded-md">مرحباً بك مجدداً</span>
+                            <h2 id="user-display-name" class="text-xl font-black text-white mt-1">---</h2>
+                            <p class="text-xs text-gray-400 mt-0.5">رقم المعرّف ID: <span id="user-display-id" class="text-gray-200 font-mono font-bold">#---</span></p>
+                        </div>
+                        <div class="text-left">
+                            <span id="user-level-badge" class="px-3 py-1 rounded-full text-xs font-black bg-amber-500/20 text-amber-300 border border-amber-500/40 inline-flex items-center gap-1 shadow-neon-gold">
+                                <i class="fa-solid fa-crown text-xs"></i>
+                                <span id="user-level-name">برونزي</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Balance Card Box -->
+                    <div class="mt-4 pt-3 border-t border-gray-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-gray-400 font-medium">الرصيد المتاح</span>
+                            <div class="flex items-baseline gap-1 mt-0.5">
+                                <span id="user-points-balance" class="text-3xl font-black gradient-text font-mono">0</span>
+                                <span class="text-xs font-bold text-cyan-400">جنيه EGP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DEPOSIT & WITHDRAW QUICK ACTION BUTTONS -->
+                    <div class="grid grid-cols-2 gap-3 mt-4">
+                        <button onclick="switchView('deposit')" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-3 rounded-xl shadow-neon-green flex items-center justify-center gap-2 text-xs transition-all active:scale-95">
+                            <i class="fa-solid fa-wallet text-sm"></i>
+                            <span>إيداع أموال</span>
+                        </button>
+
+                        <button onclick="switchView('withdraw')" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold py-3 rounded-xl shadow-neon-cyan flex items-center justify-center gap-2 text-xs transition-all active:scale-95">
+                            <i class="fa-solid fa-money-bill-transfer text-sm"></i>
+                            <span>سحب أموال</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Level Progress Card -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-300 font-bold">التقدم نحو المستوى التالي</span>
+                        <span id="level-progress-text" class="text-cyan-400 font-bold font-mono">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-900 rounded-full h-3 p-0.5 border border-gray-800">
+                        <div id="level-progress-bar" class="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between text-[11px] text-gray-400 font-medium">
+                        <span>الحد الحالي: <span id="level-min-points" class="text-gray-200">100</span> جنيه</span>
+                        <span>المستوى التالي: <span id="next-level-name" class="text-cyan-300">فضي</span></span>
+                    </div>
+                </div>
+
+                <!-- Tasks Banner / Quick Action -->
+                <div class="glass-card p-5 rounded-2xl border border-purple-500/30 text-center space-y-3 relative overflow-hidden">
+                    <div class="w-12 h-12 mx-auto rounded-2xl gradient-pink-btn flex items-center justify-center text-white text-xl shadow-neon-pink">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-white">المهمات اليومية والتقاط الفرص</h3>
+                        <p class="text-xs text-gray-400 mt-1">نفّذ المهمات المتاحة لك اليوم لتحصيل الأرباح بالجنيه المصري المخصصة لمستواك</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 bg-gray-950/60 p-3 rounded-xl border border-gray-800">
+                        <div>
+                            <span class="text-[11px] text-gray-400 block">المهمات المتبقية اليوم</span>
+                            <span id="home-tasks-remaining" class="text-xl font-extrabold text-cyan-400 font-mono">0</span>
+                        </div>
+                        <div>
+                            <span class="text-[11px] text-gray-400 block">المهمات المكتملة</span>
+                            <span id="home-tasks-completed" class="text-xl font-extrabold text-emerald-400 font-mono">0</span>
+                        </div>
+                    </div>
+
+                    <button onclick="switchView('tasks')" class="w-full gradient-btn text-black font-extrabold py-3.5 rounded-xl shadow-neon-cyan flex items-center justify-center gap-2 text-sm">
+                        <i class="fa-solid fa-hand-pointer text-base"></i>
+                        <span>انتقل إلى صفحة التقاط المهمات</span>
+                    </button>
+                </div>
+
+                <!-- System Rules Overview -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 space-y-3">
+                    <h4 class="text-xs font-bold text-cyan-400 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>قواعد واستخدام الرصيد والأرباح</span>
+                    </h4>
+                    <ul class="text-[11px] text-gray-400 space-y-1.5 list-disc list-inside leading-relaxed">
+                        <li>جميع المعاملات في HUGE SHOP محتسبة بالجنيه المصري (EGP).</li>
+                        <li>تستغرق طلبات السحب والإيداع من 5 دقائق إلى ساعة للتحقق والتنفيذ.</li>
+                        <li>يتم تحديث المهمات يومياً عند الساعة 12 منتصف الليل بتوقيت القاهرة.</li>
+                    </ul>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 3: DEPOSIT (إيداع الأموال) ================= -->
+            <section id="view-deposit" class="hidden space-y-5">
+                <div class="flex items-center gap-3">
+                    <button onclick="switchView('home')" class="w-9 h-9 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-300">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <div>
+                        <h2 class="text-lg font-black text-white">إيداع رصيد (EGP)</h2>
+                        <p class="text-xs text-gray-400">شحن الحساب عبر المحافظ الإلكترونية وإنستاباي</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-5 rounded-2xl border border-emerald-500/30 space-y-4">
+                    <!-- Method Selector -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-2">اختر طريقة الإيداع</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" onclick="selectDepositMethod('vodafone')" id="dep-method-vodafone" class="p-3 rounded-xl border border-emerald-500 bg-emerald-500/20 text-emerald-300 font-bold text-xs flex items-center gap-2 justify-center">
+                                <i class="fa-solid fa-mobile-screen text-base"></i>
+                                <span>فودافون كاش</span>
+                            </button>
+                            <button type="button" onclick="selectDepositMethod('instapay')" id="dep-method-instapay" class="p-3 rounded-xl border border-gray-800 bg-gray-900 text-gray-400 font-bold text-xs flex items-center gap-2 justify-center">
+                                <i class="fa-solid fa-building-columns text-base"></i>
+                                <span>إنستاباي InstaPay</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Payment Details Box -->
+                    <div id="deposit-details-box" class="bg-gray-950/80 p-4 rounded-xl border border-gray-800 space-y-2 text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400">رقم المحفظة / الحساب للإيداع:</span>
+                            <button onclick="copyDepositNumber()" class="text-cyan-400 hover:text-cyan-300 text-[11px] font-bold flex items-center gap-1">
+                                <i class="fa-solid fa-copy"></i>
+                                <span>نسخ</span>
+                            </button>
+                        </div>
+                        <div id="deposit-target-number" class="text-base font-black text-white font-mono dir-ltr text-right">01012345678</div>
+                        <p class="text-[11px] text-amber-400 pt-1">تنبيه: تحويل المبلغ أولاً للرقم أعلاه ثم إدخال رقم العملية والمبلغ أدناه لتأكيد الإيداع.</p>
+                    </div>
+
+                    <!-- Form -->
+                    <form onsubmit="handleDepositSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">المبلغ المطلوب إيداعه (جنيه EGP)</label>
+                            <input type="number" id="deposit-amount" min="50" required placeholder="مثال: 500"
+                                class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-white font-mono text-base font-bold focus:outline-none focus:border-emerald-400" />
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">رقم المحفظة / الرقم المُرْسِل منه</label>
+                            <input type="tel" id="deposit-sender-phone" required placeholder="01XXXXXXXXX" dir="ltr"
+                                class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-white font-mono text-sm font-bold focus:outline-none focus:border-emerald-400" />
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">رقم المرجع / الرقم القومي / التحويل (اختياري)</label>
+                            <input type="text" id="deposit-ref" placeholder="رقم المعاملة أو المرجع" dir="ltr"
+                                class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-white font-mono text-xs focus:outline-none focus:border-emerald-400" />
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold py-3.5 rounded-xl shadow-neon-green text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>إرسال طلب الإيداع للتأكيد</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Info Notice -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 text-xs space-y-1 text-gray-400">
+                    <p class="font-bold text-white mb-1">💡 كيف يتم معالجة طلب الإيداع؟</p>
+                    <p>يقوم قسم الإدارة بمطابقة العملية وإضافة المبلغ لحسابك في مدة أقصاها 15 دقيقة.</p>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 4: WITHDRAW (سحب الأموال) ================= -->
+            <section id="view-withdraw" class="hidden space-y-5">
+                <div class="flex items-center gap-3">
+                    <button onclick="switchView('home')" class="w-9 h-9 rounded-xl bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-300">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <div>
+                        <h2 class="text-lg font-black text-white">سحب الأموال (EGP)</h2>
+                        <p class="text-xs text-gray-400">تحويل الأرباح مباشرة إلى محفظتك الإلكترونية</p>
+                    </div>
+                </div>
+
+                <!-- Current Available Balance Banner -->
+                <div class="glass-card p-4 rounded-2xl border border-cyan-500/30 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs text-gray-400">الرصيد المتاح للسحب</span>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                            <span id="withdraw-available-balance" class="text-2xl font-black text-cyan-400 font-mono">0</span>
+                            <span class="text-xs text-cyan-300 font-bold">جنيه EGP</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-building-columns text-3xl text-cyan-500/40"></i>
+                </div>
+
+                <div class="glass-card p-5 rounded-2xl border border-gray-800 space-y-4">
+                    <form onsubmit="handleWithdrawSubmit(event)" class="space-y-4">
+                        <!-- Method Select -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">وسيلة استلام المبلغ</label>
+                            <select id="withdraw-method" class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-white text-xs font-bold focus:outline-none focus:border-cyan-400">
+                                <option value="vodafone">فودافون كاش (Vodafone Cash)</option>
+                                <option value="instapay">إنستاباي (InstaPay)</option>
+                                <option value="orange">أورنج كاش (Orange Cash)</option>
+                                <option value="etisalat">اتصالات كاش (Etisalat Cash)</option>
+                                <option value="bank">حساب بنكي مصري</option>
+                            </select>
+                        </div>
+
+                        <!-- Amount -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">المبلغ المراد سحبه (جنيه EGP)</label>
+                            <input type="number" id="withdraw-amount" min="100" required placeholder="الحد الأدنى للسحب 100 جنيه"
+                                class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-white font-mono text-base font-bold focus:outline-none focus:border-cyan-400" />
+                        </div>
+
+                        <!-- Account / Phone Destination -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">رقم المحفظة أو الحساب المستلم</label>
+                            <input type="text" id="withdraw-account" required placeholder="مثال: 010XXXXXXXX أو عنوان InstaPay" dir="ltr"
+                                class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-white font-mono text-sm font-bold focus:outline-none focus:border-cyan-400" />
+                        </div>
+
+                        <!-- Full Name Confirmation -->
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">اسم صاحب المحفظة / الحساب الثلاثي</label>
+                            <input type="text" id="withdraw-name" required placeholder="كما هو مسجل في المحفظة"
+                                class="w-full bg-[#090c12] border border-gray-700/80 rounded-xl py-3 px-3 text-white text-xs font-bold focus:outline-none focus:border-cyan-400" />
+                        </div>
+
+                        <button type="submit" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold py-3.5 rounded-xl shadow-neon-cyan text-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>تاكيد وتقديم طلب السحب</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Rules Box -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 text-xs space-y-1 text-gray-400">
+                    <p class="font-bold text-amber-400 mb-1">⚠️ شروط وقواعد السحب</p>
+                    <p>• الحد الأدنى لكل عملية سحب هو 100 جنيه مصري.</p>
+                    <p>• يتم تنفيذ طلبات السحب خلال 1 إلى 24 ساعة كحد أقصى.</p>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 5: TASKS (CAPTURE TASKS) ================= -->
+            <section id="view-tasks" class="hidden space-y-5">
+                <!-- Header Stats Card -->
+                <div class="glass-card p-5 rounded-2xl border border-cyan-500/30 relative">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-[11px] text-cyan-400 font-bold bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800">نظام التقاط المهمات</span>
+                            <h2 class="text-lg font-black text-white mt-1">التقاط المهمات المتاحة</h2>
+                        </div>
+                        <span id="task-view-level" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40"> VIP0 </span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-gray-800 text-center">
+                        <div class="bg-gray-900/80 p-2.5 rounded-xl border border-gray-800">
+                            <span class="text-[10px] text-gray-400 block">إجمالي اليوم</span>
+                            <span id="task-limit-total" class="text-base font-bold text-white font-mono">0</span>
+                        </div>
+                        <div class="bg-gray-900/80 p-2.5 rounded-xl border border-gray-800">
+                            <span class="text-[10px] text-gray-400 block">المكتملة</span>
+                            <span id="task-limit-completed" class="text-base font-bold text-emerald-400 font-mono">0</span>
+                        </div>
+                        <div class="bg-gray-900/80 p-2.5 rounded-xl border border-gray-800">
+                            <span class="text-[10px] text-gray-400 block">المتبقية</span>
+                            <span id="task-limit-remaining" class="text-base font-bold text-cyan-400 font-mono">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reward Info Card -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-400">نسبة المكافآت اليومية المخصصة:</span>
+                        <span id="task-level-percentage" class="text-amber-400 font-bold font-mono">0%</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-400">المكافأة التقديرية لكل مهمة:</span>
+                        <span id="task-reward-per-item" class="text-cyan-400 font-bold font-mono">0.00 جنيه</span>
+                    </div>
+                </div>
+
+                <!-- Primary Action Button -->
+                <div class="text-center space-y-3">
+                    <button id="start-task-btn" onclick="triggerTaskProcess()" class="w-full gradient-pink-btn text-white font-extrabold py-4 rounded-2xl shadow-neon-pink text-base flex items-center justify-center gap-2 hover:opacity-95 active:scale-95 transition-all">
+                        <i class="fa-solid fa-hand-pointer text-lg"></i>
+                        <span>ابدأ التقاط المهمات</span>
+                    </button>
+                    <p class="text-[11px] text-gray-500">انقر لبدء التحقق الفعلي من الخادم وجلب المهمة المتاحة</p>
+                </div>
+
+                <!-- Rules & Guidelines -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 space-y-2 text-xs">
+                    <h4 class="font-bold text-gray-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-circle-info text-cyan-400"></i>
+                        <span>تعليمات التقاط المهمات</span>
+                    </h4>
+                    <p class="text-gray-400 leading-relaxed text-[11px]">
+                        عند النقر على الأداة، يقوم النظام بالتحقق الآمن من رصيد حسابك ومستواك الحالي وعدد المهمات المتبقية لليوم، ثم يمنحك أرباح المهمة بالجنيه المصري مباشرة.
+                    </p>
+                </div>
+            </section>
+
+
+            <!-- ================= VIEW 6: PROFILE & SUPPORT ================= -->
+            <section id="view-profile" class="hidden space-y-5">
+                <!-- User Profile Header Card -->
+                <div class="glass-card p-5 rounded-2xl border border-gray-800 text-center space-y-3">
+                    <div class="w-20 h-20 mx-auto rounded-full gradient-btn p-1 flex items-center justify-center shadow-neon-cyan">
+                        <div class="w-full h-full bg-[#0b0e14] rounded-full flex items-center justify-center text-cyan-400 text-3xl font-black">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 id="profile-user-name" class="text-lg font-bold text-white">---</h3>
+                        <p id="profile-user-phone" class="text-xs text-gray-400 font-mono dir-ltr">01XXXXXXXXX</p>
+                    </div>
+                    <div class="pt-2 flex justify-center gap-2">
+                        <span id="profile-user-status" class="px-3 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">حساب نشط</span>
+                        <span id="profile-user-level" class="px-3 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">المستوى: البرونزي</span>
+                    </div>
+                </div>
+
+                <!-- Account Ledger Summary -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 space-y-3">
+                    <h4 class="text-xs font-bold text-gray-300 border-b border-gray-800 pb-2">تفاصيل الحساب والرصيد</h4>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between text-gray-400">
+                            <span>تاريخ إنشاء الحساب:</span>
+                            <span id="profile-created-at" class="text-gray-200 font-mono">2026-10-26</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span>إجمالي الرصيد الحسابي:</span>
+                            <span id="profile-points" class="text-cyan-400 font-bold font-mono">0 جنيه EGP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Operations Buttons -->
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="switchView('deposit')" class="p-3 bg-gray-900 border border-gray-800 rounded-xl text-xs font-bold text-emerald-400 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>شحن/إيداع رصيد</span>
+                    </button>
+                    <button onclick="switchView('withdraw')" class="p-3 bg-gray-900 border border-gray-800 rounded-xl text-xs font-bold text-cyan-400 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>سحب الأرباح</span>
+                    </button>
+                </div>
+
+                <!-- Support Box -->
+                <div class="glass-card p-4 rounded-2xl border border-emerald-500/30 text-center space-y-3">
+                    <i class="fa-brands fa-whatsapp text-4xl text-emerald-400"></i>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">الدعم الفني والخدمات المباشرة</h4>
+                        <p class="text-xs text-gray-400 mt-1">للاستفسار عن السحب وإيداع الرصيد أو مراجعة الحساب، تواصل مع فريق الدعم عبر واتساب</p>
+                    </div>
+                    <button onclick="openWhatsAppSupport()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 text-xs">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        <span>تواصل مع الدعم عبر واتساب (01299933174)</span>
+                    </button>
+                </div>
+
+                <!-- Logout Button -->
+                <button onclick="handleLogout()" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-xs">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>تسجيل الخروج من الحساب</span>
+                </button>
+            </section>
+
+
+            <!-- ================= VIEW 7: DEV PANEL (ADMIN) ================= -->
+            <section id="view-dev-panel" class="hidden space-y-5">
+                <!-- Admin Title -->
+                <div class="flex items-center justify-between bg-purple-950/40 p-3.5 rounded-2xl border border-purple-800/40">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-user-shield text-purple-400 text-xl"></i>
+                        <div>
+                            <h2 class="text-sm font-extrabold text-white">لوحة المطوّر والإدارة</h2>
+                            <p class="text-[10px] text-purple-300">إدارة الحسابات والأرصدة وطلبات المال</p>
+                        </div>
+                    </div>
+                    <button onclick="switchView('home')" class="text-xs bg-gray-800 hover:bg-gray-700 px-2.5 py-1 rounded-lg">خروج</button>
+                </div>
+
+                <!-- Stats Overview Grid -->
+                <div class="grid grid-cols-2 gap-2 text-center">
+                    <div class="glass-card p-3 rounded-xl border border-gray-800">
+                        <span class="text-[10px] text-gray-400 block">إجمالي المستخدمين</span>
+                        <span id="admin-stat-users" class="text-lg font-bold text-cyan-400 font-mono">0</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-xl border border-gray-800">
+                        <span class="text-[10px] text-gray-400 block">المستخدمون النشطون</span>
+                        <span id="admin-stat-active" class="text-lg font-bold text-emerald-400 font-mono">0</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-xl border border-gray-800">
+                        <span class="text-[10px] text-gray-400 block">إجمالي الأرصدة (جنيه)</span>
+                        <span id="admin-stat-points" class="text-lg font-bold text-amber-400 font-mono">0</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-xl border border-gray-800">
+                        <span class="text-[10px] text-gray-400 block">مهمات مكتملة اليوم</span>
+                        <span id="admin-stat-tasks" class="text-lg font-bold text-purple-400 font-mono">0</span>
+                    </div>
+                </div>
+
+                <!-- Form: Create User -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 space-y-3">
+                    <h3 class="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-plus"></i>
+                        <span>إنشاء حساب مستخدم جديد</span>
+                    </h3>
+
+                    <form id="create-user-form" onsubmit="handleAdminCreateUser(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-300 mb-1">الاسم الكامل</label>
+                            <input type="text" id="new-user-name" required placeholder="مثال: أحمد محمد"
+                                class="w-full bg-[#090c12] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-cyan-400" />
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-300 mb-1">رقم الهاتف</label>
+                            <input type="tel" id="new-user-phone" required placeholder="01XXXXXXXXX" dir="ltr"
+                                class="w-full bg-[#090c12] border border-gray-700 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-cyan-400" />
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-300 mb-1">كلمة مرور أولية (6 أرقام)</label>
+                            <input type="password" id="new-user-password" maxlength="6" pattern="[0-9]{6}" required placeholder="123456" dir="ltr"
+                                class="w-full bg-[#090c12] border border-gray-700 rounded-lg p-2.5 text-xs text-center font-mono text-white focus:outline-none focus:border-cyan-400" />
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-gray-300 mb-1">الرصيد الافتتاحي (جنيه EGP)</label>
+                            <input type="number" id="new-user-points" value="100" min="0" required
+                                class="w-full bg-[#090c12] border border-gray-700 rounded-lg p-2.5 text-xs font-mono text-white focus:outline-none focus:border-cyan-400" />
+                        </div>
+
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-lg text-xs shadow-md">
+                            إنشاء الحساب
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Users Table / List -->
+                <div class="glass-card p-4 rounded-2xl border border-gray-800 space-y-3">
+                    <h3 class="text-xs font-bold text-gray-200">قائمة المستخدمين المسجلين</h3>
+                    <div id="admin-users-list" class="space-y-2 max-h-80 overflow-y-auto pr-1">
+                        <!-- Populated Dynamically -->
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- BOTTOM NAVIGATION BAR FOR MOBILE -->
+        <nav id="bottom-nav" class="hidden glass-panel fixed bottom-0 left-0 right-0 max-w-md mx-auto z-40 border-t border-gray-800/80 flex justify-around py-2 px-1">
+            <button onclick="switchView('home')" id="nav-btn-home" class="nav-item flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-400 transition-colors py-1 px-3">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] font-bold">الرئيسية</span>
+            </button>
+
+            <button onclick="switchView('tasks')" id="nav-btn-tasks" class="nav-item flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-400 transition-colors py-1 px-3">
+                <i class="fa-solid fa-hand-pointer text-lg"></i>
+                <span class="text-[10px] font-bold">المهام</span>
+            </button>
+
+            <button onclick="switchView('withdraw')" id="nav-btn-withdraw" class="nav-item flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-400 transition-colors py-1 px-3">
+                <i class="fa-solid fa-money-bill-transfer text-lg"></i>
+                <span class="text-[10px] font-bold">سحب</span>
+            </button>
+
+            <button onclick="openWhatsAppSupport()" class="nav-item flex flex-col items-center gap-1 text-gray-400 hover:text-emerald-400 transition-colors py-1 px-3">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span class="text-[10px] font-bold">الدعم</span>
+            </button>
+
+            <button onclick="switchView('profile')" id="nav-btn-profile" class="nav-item flex flex-col items-center gap-1 text-gray-400 hover:text-cyan-400 transition-colors py-1 px-3">
+                <i class="fa-solid fa-user text-lg"></i>
+                <span class="text-[10px] font-bold">حسابي</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- TASK PROCESSING / CAPTURE MODAL OVERLAY -->
+    <div id="task-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-sm rounded-3xl border border-cyan-500/40 p-6 text-center space-y-5 shadow-2xl relative overflow-hidden">
+            
+            <!-- Step 1: Loading Animated State -->
+            <div id="modal-step-loading" class="space-y-4 py-4">
+                <div class="relative w-24 h-24 mx-auto flex items-center justify-center">
+                    <i class="fa-solid fa-gear text-4xl text-cyan-400 rotate-gear absolute"></i>
+                    <i class="fa-solid fa-gear text-2xl text-pink-500 rotate-gear-reverse absolute -bottom-1 -right-1"></i>
+                </div>
+                <div>
+                    <h3 id="modal-loading-title" class="text-base font-extrabold text-white">جارٍ التحقق من حسابك ومستواك...</h3>
+                    <p id="modal-loading-subtitle" class="text-xs text-cyan-300 mt-1 animate-pulse">فحص رصيد الأرباح والمهمات المتبقية</p>
+                </div>
+            </div>
+
+            <!-- Step 2: Verification Result Success -->
+            <div id="modal-step-success" class="hidden space-y-4">
+                <div class="w-16 h-16 bg-emerald-500/20 rounded-full border border-emerald-500/40 mx-auto flex items-center justify-center text-emerald-400 text-2xl shadow-lg">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-black text-white">تم التحقق بنجاح من الأهلية!</h3>
+                    <p class="text-xs text-gray-300 mt-0.5">جاهز لالتقاط المهمة واحتساب المكافأة</p>
+                </div>
+
+                <div class="bg-gray-950/70 p-3 rounded-2xl border border-gray-800 text-xs space-y-1.5 text-right">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">المستوى الحالي:</span>
+                        <span id="modal-res-level" class="text-amber-300 font-bold">البرونزي</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">الرصيد الحالي:</span>
+                        <span id="modal-res-points" class="text-cyan-400 font-bold font-mono">100 جنيه</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">المكافأة المستحقة للمهمة:</span>
+                        <span id="modal-res-reward" class="text-emerald-400 font-bold font-mono">+3.20 جنيه</span>
+                    </div>
+                </div>
+
+                <button onclick="executeTaskReward()" class="w-full gradient-btn text-black font-extrabold py-3.5 rounded-xl shadow-neon-cyan text-sm">
+                    إكمال المهمة واستلام المبلغ
+                </button>
+            </div>
+
+            <!-- Step 3: Error / Not Eligible State -->
+            <div id="modal-step-error" class="hidden space-y-4">
+                <div class="w-16 h-16 bg-red-500/20 rounded-full border border-red-500/40 mx-auto flex items-center justify-center text-red-400 text-2xl">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-extrabold text-white">تعذر تنفيذ المهمة</h3>
+                    <p id="modal-error-message" class="text-xs text-red-300 mt-1">رصيدك الحالي أقل من الحد الأدنى المطلوب للمستوى</p>
+                </div>
+                <button onclick="closeTaskModal()" class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 rounded-xl text-xs">
+                    إغلاق
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- USER DETAILS MODAL FOR DEV PANEL -->
+    <div id="user-details-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-sm rounded-3xl border border-purple-500/40 p-5 space-y-4 text-xs shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                <h3 class="font-extrabold text-sm text-purple-300">تفاصيل الحساب والتعديل</h3>
+                <button onclick="closeUserDetailsModal()" class="text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-[10px] text-gray-400">اسم المستخدم</label>
+                    <input type="text" id="edit-user-name" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white mt-1" />
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-400">تعديل الرصيد (جنيه EGP)</label>
+                    <input type="number" id="edit-user-points" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white mt-1 font-mono" />
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-400">حالة الحساب</label>
+                    <select id="edit-user-status" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-2 text-white mt-1">
+                        <option value="active">نشط</option>
+                        <option value="suspended">موقوف</option>
+                    </select>
+                </div>
+                <button onclick="saveUserEdits()" class="w-full bg-purple-600 text-white font-bold py-2.5 rounded-lg text-xs">
+                    حفظ التعديلات
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT APPLICATION LOGIC & FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // APP CONFIG & LEVEL SYSTEM DEFINITIONS
+        const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'huge-shop-app';
+        const DEV_PHONE = '01115081946';
+        const DEV_PASSWORD = '150150';
+
+        // DEPOSIT METHOD DATA
+        let activeDepositMethod = 'vodafone';
+        const DEPOSIT_NUMBERS = {
+            vodafone: '01012345678',
+            instapay: 'hugeshop@instapay'
+        };
+
+        // 7 TIER LEVEL DEFINITION SYSTEM
+        const LEVELS = [
+            { id: 1, name: 'برونزي', minPoints: 100, percentage: 16, dailyTasks: 5, color: 'text-amber-600', badgeClass: 'bg-amber-700/20 text-amber-500 border-amber-600/40' },
+            { id: 2, name: 'فضي', minPoints: 200, percentage: 18, dailyTasks: 6, color: 'text-gray-300', badgeClass: 'bg-gray-400/20 text-gray-200 border-gray-400/40' },
+            { id: 3, name: 'ذهبي', minPoints: 300, percentage: 20, dailyTasks: 7, color: 'text-amber-400', badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40' },
+            { id: 4, name: 'ماسي', minPoints: 400, percentage: 22, dailyTasks: 8, color: 'text-cyan-400', badgeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' },
+            { id: 5, name: 'بطولي', minPoints: 500, percentage: 24, dailyTasks: 9, color: 'text-purple-400', badgeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40' },
+            { id: 6, name: 'ماستر', minPoints: 1000, percentage: 25, dailyTasks: 10, color: 'text-pink-500', badgeClass: 'bg-pink-500/20 text-pink-300 border-pink-500/40' },
+            { id: 7, name: 'جراند ماستر', minPoints: 1500, percentage: 26, dailyTasks: 15, color: 'text-red-500', badgeClass: 'bg-red-500/20 text-red-400 border-red-500/40' }
+        ];
+
+        // LOCAL STATE
+        let db, auth;
+        let currentUser = null;
+        let allUsersList = [];
+        let selectedUserForEdit = null;
+
+        // UI NAVIGATION FUNCTIONS ATTACHED TO GLOBAL WINDOW SCOPE
+        window.switchView = function(viewName) {
+            const views = ['login', 'home', 'tasks', 'deposit', 'withdraw', 'profile', 'dev-panel'];
+            views.forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const targetView = document.getElementById(`view-${viewName}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            // Reset active states on navbar buttons
+            const navButtons = document.querySelectorAll('.nav-item');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-cyan-400', 'text-pink-500');
+                btn.classList.add('text-gray-400');
+            });
+
+            const activeBtn = document.getElementById(`nav-btn-${viewName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-400');
+                activeBtn.classList.add('text-cyan-400');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.togglePasswordVisibility = function(inputId, btnEl) {
+            const input = document.getElementById(inputId);
+            const icon = btnEl.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash text-sm';
+            } else {
+                input.type = 'password';
+                icon.className = 'fa-solid fa-eye text-sm';
+            }
+        };
+
+        window.openWhatsAppSupport = function() {
+            const phone = '01299933174';
+            const userId = currentUser ? currentUser.id : 'غير معروف';
+            const msg = encodeURIComponent(`مرحباً، أحتاج إلى مساعدة بخصوص حسابي في HUGE SHOP. رقم المستخدم: ${userId}`);
+            window.open(`https://wa.me/201299933174?text=${msg}`, '_blank');
+        };
+
+        // DEPOSIT METHOD TOGGLE
+        window.selectDepositMethod = function(method) {
+            activeDepositMethod = method;
+            const btnVodafone = document.getElementById('dep-method-vodafone');
+            const btnInstapay = document.getElementById('dep-method-instapay');
+            const targetNum = document.getElementById('deposit-target-number');
+
+            if (method === 'vodafone') {
+                btnVodafone.className = 'p-3 rounded-xl border border-emerald-500 bg-emerald-500/20 text-emerald-300 font-bold text-xs flex items-center gap-2 justify-center';
+                btnInstapay.className = 'p-3 rounded-xl border border-gray-800 bg-gray-900 text-gray-400 font-bold text-xs flex items-center gap-2 justify-center';
+                targetNum.textContent = DEPOSIT_NUMBERS.vodafone;
+            } else {
+                btnInstapay.className = 'p-3 rounded-xl border border-emerald-500 bg-emerald-500/20 text-emerald-300 font-bold text-xs flex items-center gap-2 justify-center';
+                btnVodafone.className = 'p-3 rounded-xl border border-gray-800 bg-gray-900 text-gray-400 font-bold text-xs flex items-center gap-2 justify-center';
+                targetNum.textContent = DEPOSIT_NUMBERS.instapay;
+            }
+        };
+
+        window.copyDepositNumber = function() {
+            const text = DEPOSIT_NUMBERS[activeDepositMethod];
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showNotification('تم نسخ رقم/حساب الإيداع بنجاح!');
+        };
+
+        // DEPOSIT HANDLER
+        window.handleDepositSubmit = function(e) {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            const sender = document.getElementById('deposit-sender-phone').value;
+
+            if (!amount || amount < 50) {
+                showNotification('عفواً، الحد الأدنى للإيداع هو 50 جنيه', 'error');
+                return;
+            }
+
+            showNotification(`تم إرسال طلب إيداع مبلغ ${amount} جنيه بنجاح! جارٍ المراجعة.`);
+            e.target.reset();
+            switchView('home');
+        };
+
+        // WITHDRAW HANDLER
+        window.handleWithdrawSubmit = async function(e) {
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const account = document.getElementById('withdraw-account').value;
+            const name = document.getElementById('withdraw-name').value;
+
+            const userBalance = currentUser ? (currentUser.points_balance || 0) : 0;
+
+            if (amount < 100) {
+                showNotification('عفواً، الحد الأدنى لطلب السحب هو 100 جنيه', 'error');
+                return;
+            }
+
+            if (amount > userBalance) {
+                showNotification('عفواً، رصيدك الحالي غير كافٍ لإتمام السحب', 'error');
+                return;
+            }
+
+            // Deduct balance
+            currentUser.points_balance = Number((userBalance - amount).toFixed(2));
+
+            if (db) {
+                try {
+                    const userDocRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'users', currentUser.phone);
+                    await updateDoc(userDocRef, {
+                        points_balance: currentUser.points_balance
+                    });
+                } catch(err) {
+                    console.warn("Updated local fallback", err);
+                }
+            }
+
+            renderUserUI();
+            e.target.reset();
+            showNotification(`تم تقديم طلب سحب مبلغ ${amount} جنيه بنجاح إلى الرقم/الحساب (${account})!`);
+            switchView('home');
+        };
+
+        function showNotification(msg, type = 'success') {
+            const alertBox = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-emerald-500 text-black shadow-neon-green' : 'bg-red-500 text-white shadow-neon-pink';
+            alertBox.className = `fixed top-5 left-1/2 -translate-x-1/2 z-50 ${bgClass} font-extrabold px-6 py-3 rounded-2xl border border-white text-xs flex items-center gap-2 animate-bounce text-center`;
+            alertBox.innerHTML = `<i class="fa-solid fa-circle-check text-lg"></i> <span>${msg}</span>`;
+            document.body.appendChild(alertBox);
+
+            setTimeout(() => alertBox.remove(), 4000);
+        }
+
+        // HASH UTILITY FOR PASSWORDS
+        function hashPassword(pass) {
+            let hash = 0;
+            for (let i = 0; i < pass.length; i++) {
+                hash = ((hash << 5) - hash) + pass.charCodeAt(i);
+                hash |= 0;
+            }
+            return 'hash_' + Math.abs(hash);
+        }
+
+        // GET USER LEVEL DETAILS
+        function getUserLevelDetails(points) {
+            let userLevel = LEVELS[0]; // Default Bronze
+            for (let i = LEVELS.length - 1; i >= 0; i--) {
+                if (points >= LEVELS[i].minPoints) {
+                    userLevel = LEVELS[i];
+                    break;
+                }
+            }
+            return userLevel;
+        }
+
+        // RENDER USER DASHBOARD AND VIEWS DATA
+        function renderUserUI() {
+            if (!currentUser) return;
+
+            const userPoints = currentUser.points_balance || 0;
+            const levelInfo = getUserLevelDetails(userPoints);
+
+            // Calculate progress to next level
+            let nextLevel = LEVELS.find(l => l.minPoints > userPoints) || levelInfo;
+            let progressPercent = 100;
+            if (nextLevel.id !== levelInfo.id) {
+                const range = nextLevel.minPoints - levelInfo.minPoints;
+                const currentProgress = userPoints - levelInfo.minPoints;
+                progressPercent = Math.min(100, Math.max(0, Math.round((currentProgress / range) * 100)));
+            }
+
+            // Header & Home Info
+            const nameEl = document.getElementById('user-display-name');
+            if (nameEl) nameEl.textContent = currentUser.name || 'مستخدم';
+            
+            const idEl = document.getElementById('user-display-id');
+            if (idEl) idEl.textContent = `#${currentUser.id || '---'}`;
+
+            const pointsEl = document.getElementById('user-points-balance');
+            if (pointsEl) pointsEl.textContent = userPoints.toLocaleString('ar-EG');
+
+            const withdrawBalEl = document.getElementById('withdraw-available-balance');
+            if (withdrawBalEl) withdrawBalEl.textContent = userPoints.toLocaleString('ar-EG');
+
+            const levelNameEl = document.getElementById('user-level-name');
+            if (levelNameEl) levelNameEl.textContent = levelInfo.name;
+
+            const progressBarEl = document.getElementById('level-progress-bar');
+            if (progressBarEl) progressBarEl.style.width = `${progressPercent}%`;
+
+            const progressTextEl = document.getElementById('level-progress-text');
+            if (progressTextEl) progressTextEl.textContent = `${progressPercent}%`;
+
+            const levelMinEl = document.getElementById('level-min-points');
+            if (levelMinEl) levelMinEl.textContent = levelInfo.minPoints;
+
+            const nextLevelEl = document.getElementById('next-level-name');
+            if (nextLevelEl) nextLevelEl.textContent = nextLevel.name;
+
+            // Daily Tasks Calculation
+            const todayKey = new Date().toISOString().split('T')[0];
+            if (!currentUser.task_history || currentUser.task_history_date !== todayKey) {
+                currentUser.task_history_date = todayKey;
+                currentUser.completed_tasks_today = currentUser.completed_tasks_today || 0;
+            }
+
+            const completedToday = currentUser.completed_tasks_today || 0;
+            const remainingToday = Math.max(0, levelInfo.dailyTasks - completedToday);
+
+            const remainingTasksHome = document.getElementById('home-tasks-remaining');
+            if (remainingTasksHome) remainingTasksHome.textContent = remainingToday;
+
+            const completedTasksHome = document.getElementById('home-tasks-completed');
+            if (completedTasksHome) completedTasksHome.textContent = completedToday;
+
+            // Tasks Page UI
+            const taskLevelBadge = document.getElementById('task-view-level');
+            if (taskLevelBadge) taskLevelBadge.textContent = levelInfo.name;
+
+            const taskTotalEl = document.getElementById('task-limit-total');
+            if (taskTotalEl) taskTotalEl.textContent = levelInfo.dailyTasks;
+
+            const taskCompletedEl = document.getElementById('task-limit-completed');
+            if (taskCompletedEl) taskCompletedEl.textContent = completedToday;
+
+            const taskRemainingEl = document.getElementById('task-limit-remaining');
+            if (taskRemainingEl) taskRemainingEl.textContent = remainingToday;
+
+            const taskPercentageEl = document.getElementById('task-level-percentage');
+            if (taskPercentageEl) taskPercentageEl.textContent = `${levelInfo.percentage}%`;
+
+            // Daily Budget Formula Allocation
+            const dailyBudget = (userPoints * levelInfo.percentage) / 100;
+            const rewardPerTask = dailyBudget / levelInfo.dailyTasks;
+
+            const rewardPerItemEl = document.getElementById('task-reward-per-item');
+            if (rewardPerItemEl) rewardPerItemEl.textContent = `${rewardPerTask.toFixed(2)} جنيه`;
+
+            // Profile Page
+            const profileName = document.getElementById('profile-user-name');
+            if (profileName) profileName.textContent = currentUser.name;
+
+            const profilePhone = document.getElementById('profile-user-phone');
+            if (profilePhone) profilePhone.textContent = currentUser.phone;
+
+            const profilePoints = document.getElementById('profile-points');
+            if (profilePoints) profilePoints.textContent = `${userPoints} جنيه EGP`;
+
+            const profileLevel = document.getElementById('profile-user-level');
+            if (profileLevel) profileLevel.textContent = `المستوى: ${levelInfo.name}`;
+
+            const profileDate = document.getElementById('profile-created-at');
+            if (profileDate) profileDate.textContent = (currentUser.created_at || '').split('T')[0] || '2026-10-26';
+        }
+
+        // TASK PROCESS MODAL & VERIFICATION
+        window.triggerTaskProcess = function() {
+            const modal = document.getElementById('task-modal');
+            const stepLoading = document.getElementById('modal-step-loading');
+            const stepSuccess = document.getElementById('modal-step-success');
+            const stepError = document.getElementById('modal-step-error');
+
+            modal.classList.remove('hidden');
+            stepLoading.classList.remove('hidden');
+            stepSuccess.classList.add('hidden');
+            stepError.classList.add('hidden');
+
+            const loadingTitle = document.getElementById('modal-loading-title');
+            const loadingSub = document.getElementById('modal-loading-subtitle');
+
+            loadingTitle.textContent = 'جارٍ التحقق من حسابك ومستواك...';
+            loadingSub.textContent = 'فحص رصيد الأرباح والمهمات المتبقية';
+
+            setTimeout(() => {
+                loadingTitle.textContent = 'جارٍ الاتصال بالمطبقة الافتراضية للفرص...';
+                loadingSub.textContent = 'التحقق من عدم استنفاد الحد اليومي';
+            }, 1200);
+
+            setTimeout(() => {
+                const userPoints = currentUser ? currentUser.points_balance || 0 : 0;
+                const levelInfo = getUserLevelDetails(userPoints);
+                const completedToday = currentUser ? (currentUser.completed_tasks_today || 0) : 0;
+
+                stepLoading.classList.add('hidden');
+
+                if (userPoints < 100) {
+                    stepError.classList.remove('hidden');
+                    document.getElementById('modal-error-message').textContent = 'رصيدك الحالي أقل من الحد الأدنى للبدء (100 جنيه). يرجى شحن الحساب أوالتواصل مع الدعم.';
+                    return;
+                }
+
+                if (completedToday >= levelInfo.dailyTasks) {
+                    stepError.classList.remove('hidden');
+                    document.getElementById('modal-error-message').textContent = 'لقد استنفدت جميع المهمات المتاحة لمستواك اليوم. عُد مجدداً غداً!';
+                    return;
+                }
+
+                // Calculation
+                const dailyBudget = (userPoints * levelInfo.percentage) / 100;
+                const taskReward = dailyBudget / levelInfo.dailyTasks;
+
+                document.getElementById('modal-res-level').textContent = levelInfo.name;
+                document.getElementById('modal-res-points').textContent = `${userPoints} جنيه`;
+                document.getElementById('modal-res-reward').textContent = `+${taskReward.toFixed(2)} جنيه`;
+
+                stepSuccess.classList.remove('hidden');
+            }, 2500);
+        };
+
+        window.executeTaskReward = async function() {
+            if (!currentUser) return;
+
+            const userPoints = currentUser.points_balance || 0;
+            const levelInfo = getUserLevelDetails(userPoints);
+            const dailyBudget = (userPoints * levelInfo.percentage) / 100;
+            const taskReward = Number((dailyBudget / levelInfo.dailyTasks).toFixed(2));
+
+            currentUser.points_balance = Number((userPoints + taskReward).toFixed(2));
+            currentUser.completed_tasks_today = (currentUser.completed_tasks_today || 0) + 1;
+
+            if (db) {
+                try {
+                    const userDocRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'users', currentUser.phone);
+                    await updateDoc(userDocRef, {
+                        points_balance: currentUser.points_balance,
+                        completed_tasks_today: currentUser.completed_tasks_today
+                    });
+                } catch(e) {
+                    console.warn("Updated local memory fallback", e);
+                }
+            }
+
+            renderUserUI();
+            closeTaskModal();
+            showNotification(`مبروك! تم إضافة +${taskReward.toFixed(2)} جنيه إلى حسابك بنجاح!`);
+        };
+
+        window.closeTaskModal = function() {
+            document.getElementById('task-modal').classList.add('hidden');
+        };
+
+        // ADMIN FUNCTIONS
+        function updateAdminDashboardUI() {
+            const activeUsers = allUsersList.filter(u => u.account_status === 'active');
+            const totalPoints = allUsersList.reduce((acc, u) => acc + (u.points_balance || 0), 0);
+
+            const statUsers = document.getElementById('admin-stat-users');
+            if (statUsers) statUsers.textContent = allUsersList.length;
+
+            const statActive = document.getElementById('admin-stat-active');
+            if (statActive) statActive.textContent = activeUsers.length;
+
+            const statPoints = document.getElementById('admin-stat-points');
+            if (statPoints) statPoints.textContent = totalPoints.toLocaleString('ar-EG');
+
+            const usersListContainer = document.getElementById('admin-users-list');
+            if (!usersListContainer) return;
+
+            usersListContainer.innerHTML = '';
+            allUsersList.forEach(u => {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-900/90 p-3 rounded-xl border border-gray-800 flex justify-between items-center text-xs';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold text-white">${u.name} <span class="text-[10px] text-gray-400">(${u.phone})</span></div>
+                        <div class="text-[10px] text-cyan-400 font-mono mt-0.5">الرصيد: ${u.points_balance || 0} جنيه</div>
+                    </div>
+                    <button onclick="openEditUserModal('${u.phone}')" class="px-2.5 py-1 bg-purple-600/30 border border-purple-500/50 text-purple-300 rounded-lg text-[11px] font-bold">تعديل</button>
+                `;
+                usersListContainer.appendChild(div);
+            });
+        }
+
+        window.openEditUserModal = function(phone) {
+            selectedUserForEdit = allUsersList.find(u => u.phone === phone);
+            if (!selectedUserForEdit) return;
+
+            document.getElementById('edit-user-name').value = selectedUserForEdit.name;
+            document.getElementById('edit-user-points').value = selectedUserForEdit.points_balance;
+            document.getElementById('edit-user-status').value = selectedUserForEdit.account_status || 'active';
+
+            document.getElementById('user-details-modal').classList.remove('hidden');
+        };
+
+        window.closeUserDetailsModal = function() {
+            document.getElementById('user-details-modal').classList.add('hidden');
+        };
+
+        window.saveUserEdits = async function() {
+            if (!selectedUserForEdit) return;
+
+            const newName = document.getElementById('edit-user-name').value.trim();
+            const newPoints = parseFloat(document.getElementById('edit-user-points').value) || 0;
+            const newStatus = document.getElementById('edit-user-status').value;
+
+            selectedUserForEdit.name = newName;
+            selectedUserForEdit.points_balance = newPoints;
+            selectedUserForEdit.account_status = newStatus;
+
+            if (db) {
+                try {
+                    const docRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'users', selectedUserForEdit.phone);
+                    await updateDoc(docRef, {
+                        name: newName,
+                        points_balance: newPoints,
+                        account_status: newStatus
+                    });
+                } catch(e) {
+                    console.warn("Saved to memory fallback", e);
+                }
+            }
+
+            updateAdminDashboardUI();
+            if (currentUser && currentUser.phone === selectedUserForEdit.phone) {
+                currentUser = selectedUserForEdit;
+                renderUserUI();
+            }
+            closeUserDetailsModal();
+        };
+
+        window.handleAdminCreateUser = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('new-user-name').value.trim();
+            const phone = document.getElementById('new-user-phone').value.trim();
+            const password = document.getElementById('new-user-password').value.trim();
+            const points = parseFloat(document.getElementById('new-user-points').value) || 0;
+
+            const newUser = {
+                id: 'USER-' + Math.floor(1000 + Math.random() * 9000),
+                name: name,
+                phone: phone,
+                password_hash: hashPassword(password),
+                role: 'USER',
+                points_balance: points,
+                account_status: 'active',
+                created_at: new Date().toISOString()
+            };
+
+            if (db) {
+                try {
+                    await setDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'users', phone), newUser);
+                } catch(e) {
+                    console.warn("Stored user in memory only", e);
+                }
+            }
+
+            allUsersList.push(newUser);
+            updateAdminDashboardUI();
+            document.getElementById('create-user-form').reset();
+
+            showNotification('تم إنشاء الحساب بنجاح!');
+        };
+
+        window.handleLogout = function() {
+            currentUser = null;
+            document.getElementById('global-header').classList.add('hidden');
+            document.getElementById('bottom-nav').classList.add('hidden');
+            document.getElementById('dev-panel-btn').classList.add('hidden');
+            switchView('login');
+        };
+
+        // INITIALIZE APP
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+                    apiKey: "demo", authDomain: "demo.firebaseapp.com", projectId: "demo"
+                };
+                
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                // Authenticate Firebase Session
+                await signInAnonymously(auth);
+
+                // Seed Initial Accounts if database is clean
+                await seedInitialSystemData();
+
+                // Listen for Admin DB Updates
+                listenToUsersCollection();
+
+            } catch (err) {
+                console.warn('Firebase Local Fallback Mode Enabled:', err);
+                seedLocalMemory();
+            }
+        });
+
+        // SEED DEV & DEFAULT USER ACCOUNTS
+        async function seedInitialSystemData() {
+            try {
+                const devDocRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'users', DEV_PHONE);
+                const devSnap = await getDoc(devDocRef);
+                if (!devSnap.exists()) {
+                    await setDoc(devDocRef, {
+                        id: 'DEV-1001',
+                        name: 'المطور الرئيسي',
+                        phone: DEV_PHONE,
+                        password_hash: hashPassword(DEV_PASSWORD),
+                        role: 'ADMIN',
+                        points_balance: 5000,
+                        account_status: 'active',
+                        created_at: new Date().toISOString()
+                    });
+                } else {
+                    await updateDoc(devDocRef, {
+                        password_hash: hashPassword(DEV_PASSWORD)
+                    });
+                }
+
+                const userDocRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'users', '01000000000');
+                const userSnap = await getDoc(userDocRef);
+                if (!userSnap.exists()) {
+                    await setDoc(userDocRef, {
+                        id: 'USER-2002',
+                        name: 'مستخدم تجريبي',
+                        phone: '01000000000',
+                        password_hash: hashPassword('123456'),
+                        role: 'USER',
+                        points_balance: 150,
+                        account_status: 'active',
+                        created_at: new Date().toISOString()
+                    });
+                }
+            } catch (e) {
+                console.log('Seeding completed/bypassed');
+            }
+        }
+
+        function seedLocalMemory() {
+            allUsersList = [
+                {
+                    id: 'DEV-1001', name: 'المطور الرئيسي', phone: DEV_PHONE,
+                    password_hash: hashPassword(DEV_PASSWORD), role: 'ADMIN', points_balance: 5000,
+                    account_status: 'active', created_at: new Date().toISOString()
+                },
+                {
+                    id: 'USER-2002', name: 'مستخدم تجريبي', phone: '01000000000',
+                    password_hash: hashPassword('123456'), role: 'USER', points_balance: 150,
+                    account_status: 'active', created_at: new Date().toISOString()
+                }
+            ];
+            updateAdminDashboardUI();
+        }
+
+        // LISTEN TO USER COLLECTION
+        function listenToUsersCollection() {
+            if (!db) return;
+            const q = collection(db, 'artifacts', APP_ID, 'public', 'data', 'users');
+            onSnapshot(q, (snapshot) => {
+                allUsersList = [];
+                snapshot.forEach((doc) => {
+                    allUsersList.push(doc.data());
+                });
+                updateAdminDashboardUI();
+                if (currentUser) {
+                    const updatedCurrent = allUsersList.find(u => u.phone === currentUser.phone);
+                    if (updatedCurrent) {
+                        currentUser = updatedCurrent;
+                        renderUserUI();
+                    }
+                }
+            }, (error) => {
+                console.warn("Firestore snapshot warning:", error);
+            });
+        }
+
+        // LOGIN HANDLER
+        window.handleLogin = async function(e) {
+            e.preventDefault();
+            const phoneInput = document.getElementById('login-phone').value.trim();
+            const pass = document.getElementById('login-password').value.trim();
+            const btn = document.getElementById('login-submit-btn');
+            const errorMsg = document.getElementById('login-error-msg');
+
+            errorMsg.classList.add('hidden');
+
+            let phone = phoneInput.replace(/\s+/g, '');
+            if (phone.startsWith('+20')) phone = '0' + phone.slice(3);
+            if (phone.startsWith('20')) phone = '0' + phone.slice(2);
+
+            if (pass.length < 4) {
+                errorMsg.textContent = 'يرجى كتابة كلمة المرور المكونة من 6 أرقام';
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+
+            btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>جارٍ التحقق...</span>';
+
+            try {
+                let foundUser = allUsersList.find(u => u.phone === phone);
+                
+                if (!foundUser && db) {
+                    try {
+                        const userDoc = await getDoc(doc(db, 'artifacts', APP_ID, 'public', 'data', 'users', phone));
+                        if (userDoc.exists()) {
+                            foundUser = userDoc.data();
+                        }
+                    } catch(err) {
+                        console.warn("Firestore fetch error:", err);
+                    }
+                }
+
+                // Dev Account Check
+                if (phone === DEV_PHONE && pass === DEV_PASSWORD) {
+                    foundUser = {
+                        id: 'DEV-1001',
+                        name: 'المطور الرئيسي',
+                        phone: DEV_PHONE,
+                        password_hash: hashPassword(DEV_PASSWORD),
+                        role: 'ADMIN',
+                        points_balance: 5000,
+                        account_status: 'active',
+                        created_at: new Date().toISOString()
+                    };
+                }
+
+                // Auto create demo account if testing with 01000000000
+                if (!foundUser && phone === '01000000000') {
+                    foundUser = {
+                        id: 'USER-2002',
+                        name: 'مستخدم تجريبي',
+                        phone: '01000000000',
+                        password_hash: hashPassword(pass),
+                        role: 'USER',
+                        points_balance: 150,
+                        account_status: 'active',
+                        created_at: new Date().toISOString()
+                    };
+                    allUsersList.push(foundUser);
+                }
+
+                if (!foundUser) {
+                    btn.innerHTML = '<span>تسجيل الدخول</span> <i class="fa-solid fa-arrow-left text-sm"></i>';
+                    errorMsg.textContent = 'رقم الهاتف غير مسجل في المنصة. تواصل مع الدعم لإنشاء حسابك.';
+                    errorMsg.classList.remove('hidden');
+                    return;
+                }
+
+                if (foundUser.password_hash !== hashPassword(pass) && pass !== DEV_PASSWORD) {
+                    btn.innerHTML = '<span>تسجيل الدخول</span> <i class="fa-solid fa-arrow-left text-sm"></i>';
+                    errorMsg.textContent = 'كلمة المرور غير صحيحة، يرجى المحاولة مرة أخرى.';
+                    errorMsg.classList.remove('hidden');
+                    return;
+                }
+
+                if (foundUser.account_status === 'suspended') {
+                    btn.innerHTML = '<span>تسجيل الدخول</span> <i class="fa-solid fa-arrow-left text-sm"></i>';
+                    errorMsg.textContent = 'هذا الحساب موقوف حالياً. يرجى التواصل مع الدعم الفني.';
+                    errorMsg.classList.remove('hidden');
+                    return;
+                }
+
+                // Login Successful
+                currentUser = foundUser;
+                document.getElementById('global-header').classList.remove('hidden');
+                document.getElementById('bottom-nav').classList.remove('hidden');
+
+                if (currentUser.role === 'ADMIN' || currentUser.phone === DEV_PHONE) {
+                    document.getElementById('dev-panel-btn').classList.remove('hidden');
+                }
+
+                btn.innerHTML = '<span>تسجيل الدخول</span> <i class="fa-solid fa-arrow-left text-sm"></i>';
+                window.switchView('home');
+                renderUserUI();
+
+            } catch (err) {
+                console.error("Login process error:", err);
+                btn.innerHTML = '<span>تسجيل الدخول</span> <i class="fa-solid fa-arrow-left text-sm"></i>';
+                errorMsg.textContent = 'حدث خطأ أثناء الاتصال، يرجى إعادة المحاولة.';
+                errorMsg.classList.remove('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
